@@ -1,32 +1,35 @@
 "use client";
 
-import Viewport from "@/components/Viewport";
+import React from "react";
+import ReactFlow, { Background, Controls, Node } from "reactflow";
+import 'reactflow/dist/style.css';
 
-function Node({ left, top, label }: { left: number; top: number; label: string }) {
+// Einfache Node-Daten
+const nodes: Node[] = [
+  {
+    id: '1',
+    type: 'default',
+    position: { x: 250, y: 100 },
+    data: {
+      label: <img src="/logo.png" alt="Logo" style={{ width: 100, height: 100 }} />,
+    },
+  },
+];
+
+export default function FlowBoard() {
   return (
-    <div
-      style={{
-        position: "absolute",
-        left,
-        top,
-        padding: "8px 12px",
-        borderRadius: 8,
-        background: "#4ade80",
-        boxShadow: "0 2px 6px rgba(0,0,0,0.12)",
-        cursor: "pointer",
-      }}
-    >
-      {label}
+    <div style={{ width: '100vw', height: '100vh' }}>
+      <ReactFlow
+        nodes={nodes}
+        edges={[]}
+        fitView
+        panOnDrag
+        zoomOnScroll
+        zoomOnPinch
+      >
+        <Background color="#aaa" gap={16} />
+        <Controls />
+      </ReactFlow>
     </div>
-  );
-}
-
-export default function Page() {
-  return (
-    <Viewport>
-      <Node left={100} top={100} label="Planche" />
-      <Node left={400} top={220} label="Handstand" />
-      <Node left={800} top={120} label="Front Lever" />
-    </Viewport>
   );
 }
