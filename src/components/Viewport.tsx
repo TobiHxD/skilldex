@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 
-export default function MiniFlow() {
+export default function Viewport({ children }: { children: React.ReactNode }) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [scale, setScale] = useState(1);
   const [isDragging, setIsDragging] = useState(false);
@@ -49,40 +49,7 @@ export default function MiniFlow() {
           transformOrigin: "0 0",
         }}
       >
-        {/* Nodes */}
-        <div
-          style={{
-            position: "absolute",
-            left: 100,
-            top: 100,
-            width: 100,
-            height: 50,
-            background: "dodgerblue",
-            color: "white",
-            textAlign: "center",
-            lineHeight: "50px",
-            borderRadius: 8,
-          }}
-        >
-          Start
-        </div>
-
-        <div
-          style={{
-            position: "absolute",
-            left: 300,
-            top: 200,
-            width: 100,
-            height: 50,
-            background: "orange",
-            color: "white",
-            textAlign: "center",
-            lineHeight: "50px",
-            borderRadius: 8,
-          }}
-        >
-          Push
-        </div>
+        {children}
       </div>
     </div>
   );
