@@ -1,103 +1,88 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useState, useCallback } from "react";
 
-export default function Viewport({ children }: { children: React.ReactNode }) {
-  const containerRef = useRef<HTMLDivElement | null>(null);
+export default function MiniFlow() {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [scale, setScale] = useState(1);
+  const [isDragging, setIsDragging] = useState(false);
 
-  const [viewport, setViewport] = useState({ x: 0, y: 0, scale: 1 });
-  const isDragging = useRef(false);
-  const lastPos = useRef({ x: 0, y: 0 });
+  const onWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    const zoomIntensity = 0.001;
+    setScale((prev) => Math.max(0.1, prev - e.deltaY * zoomIntensity));
+  };
 
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+  const onMouseDown = () => setIsDragging(true);
+  const onMouseUp = () => setIsDragging(false);
 
-    const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      const rect = container.getBoundingClientRect();
-      const mouseX = e.clientX - rect.left;
-      const mouseY = e.clientY - rect.top;
-
-      setViewport((prev) => {
-        const scaleBy = 1.12;
-        const newScale = e.deltaY < 0 ? prev.scale * scaleBy : prev.scale / scaleBy;
-
-        const worldX = mouseX / prev.scale - prev.x;
-        const worldY = mouseY / prev.scale - prev.y;
-
-        const newX = mouseX / newScale - worldX;
-        const newY = mouseY / newScale - worldY;
-
-        return {
-          x: newX,
-          y: newY,
-          scale: Math.max(0.2, Math.min(newScale, 4)),
-        };
-      });
-    };
-
-    const handleMouseDown = (e: MouseEvent) => {
-      if (e.button !== 0) return;
-      isDragging.current = true;
-      lastPos.current = { x: e.clientX, y: e.clientY };
-      container.style.cursor = "grabbing";
-    };
-
-    const handleMouseUp = () => {
-      isDragging.current = false;
-      container.style.cursor = "grab";
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isDragging.current) return;
-      const dx = e.clientX - lastPos.current.x;
-      const dy = e.clientY - lastPos.current.y;
-      lastPos.current = { x: e.clientX, y: e.clientY };
-
-      setViewport((prev) => ({
-        ...prev,
-        x: prev.x + dx / prev.scale,
-        y: prev.y + dy / prev.scale,
+  const onMouseMove = useCallback(
+    (e: React.MouseEvent) => {
+      if (!isDragging) return;
+      setPosition((prev) => ({
+        x: prev.x + e.movementX,
+        y: prev.y + e.movementY,
       }));
-    };
-
-    container.addEventListener("wheel", handleWheel, { passive: false });
-    container.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mouseup", handleMouseUp);
-    window.addEventListener("mousemove", handleMouseMove);
-
-    container.style.cursor = "grab";
-
-    return () => {
-      container.removeEventListener("wheel", handleWheel);
-      container.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mouseup", handleMouseUp);
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
+    },
+    [isDragging]
+  );
 
   return (
     <div
-      ref={containerRef}
+      onWheel={onWheel}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
+      onMouseLeave={onMouseUp} // falls Maus den Bereich verlässt
+      onMouseMove={onMouseMove}
       style={{
         width: "100%",
         height: "100vh",
         overflow: "hidden",
-        background: "#f8fafc",
-        position: "relative",
+        background: "#111",
+        cursor: isDragging ? "grabbing" : "grab",
+        userSelect: "none",
       }}
     >
       <div
         style={{
-          transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.scale})`,
+          transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
           transformOrigin: "0 0",
-          width: "2000px",
-          height: "2000px",
-          position: "relative",
         }}
       >
-        {children}
+        {/* Nodes */}
+        <div
+          style={{
+            position: "absolute",
+            left: 100,
+            top: 100,
+            width: 100,
+            height: 50,
+            background: "dodgerblue",
+            color: "white",
+            textAlign: "center",
+            lineHeight: "50px",
+            borderRadius: 8,
+          }}
+        >
+          Start
+        </div>
+
+        <div
+          style={{
+            position: "absolute",
+            left: 300,
+            top: 200,
+            width: 100,
+            height: 50,
+            background: "orange",
+            color: "white",
+            textAlign: "center",
+            lineHeight: "50px",
+            borderRadius: 8,
+          }}
+        >
+          Push
+        </div>
       </div>
     </div>
   );

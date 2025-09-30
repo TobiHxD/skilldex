@@ -24,9 +24,6 @@ function Node({ left, top, label }: { left: number; top: number; label: string }
 export default function Page() {
   return (
     <Viewport>
-      <Node left={100} top={100} label="Planche" />
-      <Node left={400} top={220} label="Handstand" />
-      <Node left={800} top={120} label="Front Lever" />
     </Viewport>
   );
 }
