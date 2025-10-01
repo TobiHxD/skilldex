@@ -18,7 +18,7 @@ const nodes: Node[] = [
     id: '2',
     parentId: '1',
     type: 'skillNode',
-    position: { x: 0, y: 300 },
+    position: { x: 100, y: 300 },
     data: {
       label: <img src="/assets/user.png" alt="Logo" style={{ width: 50, height: 50, objectFit: 'contain' }} />,
     },

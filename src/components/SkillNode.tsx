@@ -7,6 +7,7 @@ interface SkillNodeProps {
   };
 }
 
+const handleStyle = { left: 10 };
 export default function SkillNode({ data }: SkillNodeProps) {
   return (
     <div
@@ -26,7 +27,11 @@ export default function SkillNode({ data }: SkillNodeProps) {
       <Handle
         type="target"
         position={Position.Top}
-        style={{ background: "#555" }}
+        style={{ 
+            background: "#555",
+            top: 0.1,
+            opacity: 0
+        }}
       />
 
       {/* Ausgehende Verbindung (unten) */}
@@ -35,7 +40,8 @@ export default function SkillNode({ data }: SkillNodeProps) {
         position={Position.Bottom}
         style={{ 
             background: "#555",
-            visibility: "hidden"
+            bottom: 0.1,
+            opacity: 0
          }}
       />
     </div>
