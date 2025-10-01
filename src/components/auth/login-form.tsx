@@ -1,29 +1,30 @@
 "use client";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-export function LoginForm(
-  { onLogIn }:
-  { onLogIn: (data: {
-    email: FormDataEntryValue | null,
-    password: FormDataEntryValue | null,
-  }) => void }
-) {
+export function LoginForm({
+  onLogIn,
+}: {
+  onLogIn: (data: {
+    email: FormDataEntryValue | null;
+    password: FormDataEntryValue | null;
+  }) => void;
+}) {
   const handleLogIn = (formData: FormData) => {
-    const email = formData.get("email")
-    const password = formData.get("password")
+    const email = formData.get("email");
+    const password = formData.get("password");
 
-    onLogIn({email, password})
-  }
+    onLogIn({ email, password });
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -75,5 +76,5 @@ export function LoginForm(
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

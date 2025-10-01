@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { SignupForm } from "@/components/auth/signup-form"
+import { SignupForm } from "@/components/auth/signup-form";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
@@ -8,14 +8,21 @@ export default function Page() {
   const router = useRouter();
 
   const handleSignUp = async (data: any) => {
-    await authClient.signUp.email({
-      email: data.email,
-      name: data.username,
-      password: data.password,
-    }, {
-      onSuccess: () => { router.push("/app") },
-        onError: (ctx) => { alert(ctx.error.message) },
-    });
+    await authClient.signUp.email(
+      {
+        email: data.email,
+        name: data.username,
+        password: data.password,
+      },
+      {
+        onSuccess: () => {
+          router.push("/app");
+        },
+        onError: (ctx) => {
+          alert(ctx.error.message);
+        },
+      },
+    );
   };
 
   return (
@@ -24,5 +31,5 @@ export default function Page() {
         <SignupForm onSignUp={handleSignUp} />
       </div>
     </div>
-  )
+  );
 }

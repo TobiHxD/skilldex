@@ -1,28 +1,31 @@
 "use client";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-export function SignupForm(
-  { onSignUp }:
-  { onSignUp: (data: {username: FormDataEntryValue | null, 
-                      email: FormDataEntryValue | null, 
-                      password: FormDataEntryValue | null}) => void }
-) {
+export function SignupForm({
+  onSignUp,
+}: {
+  onSignUp: (data: {
+    username: FormDataEntryValue | null;
+    email: FormDataEntryValue | null;
+    password: FormDataEntryValue | null;
+  }) => void;
+}) {
   const handleSignUp = (formData: FormData) => {
     const username = formData.get("username");
     const email = formData.get("email");
     const password = formData.get("password");
 
-    onSignUp({username, email, password});
+    onSignUp({ username, email, password });
   };
 
   return (
@@ -77,5 +80,5 @@ export function SignupForm(
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
