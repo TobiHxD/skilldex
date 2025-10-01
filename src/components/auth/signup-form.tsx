@@ -1,6 +1,5 @@
 "use client";
 
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -27,7 +26,7 @@ export function SignupForm(
   };
 
   return (
-    <div className={cn("flex flex-col gap-6")}>
+    <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
           <CardTitle>Sign up</CardTitle>

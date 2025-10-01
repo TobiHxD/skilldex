@@ -1,4 +1,5 @@
-import { cn } from "@/lib/utils"
+"use client";
+
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -10,12 +11,22 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+export function LoginForm(
+  { onLogIn }:
+  { onLogIn: (data: {
+    email: FormDataEntryValue | null,
+    password: FormDataEntryValue | null,
+  }) => void }
+) {
+  const handleLogIn = (formData: FormData) => {
+    const email = formData.get("email")
+    const password = formData.get("password")
+
+    onLogIn({email, password})
+  }
+
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
+    <div className="flex flex-col gap-6">
       <Card>
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
@@ -24,12 +35,13 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form action={handleLogIn}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="m@example.com"
                   required
@@ -45,7 +57,7 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input id="password" name="password" type="password" required />
               </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full">
