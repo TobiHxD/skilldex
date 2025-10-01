@@ -3,6 +3,7 @@
 import { SignupForm } from "@/components/auth/signup-form"
 
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/router";
 
 export default function Page() {
   const handleSignUp = async (data: any) => {
@@ -10,9 +11,8 @@ export default function Page() {
       email: data.email,
       name: data.username,
       password: data.password,
-      callbackURL: "/app" // A URL to redirect to after the user verifies their email (optional)
+      callbackURL: "/app"
     }, {
-        onRequest: (ctx) => { },
         onSuccess: (ctx) => { },
         onError: (ctx) => { alert(ctx.error.message); },
     });
