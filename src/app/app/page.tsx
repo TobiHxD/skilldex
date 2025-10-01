@@ -1,27 +1,48 @@
-"use client";
+'use client';
 
 import React from "react";
-import ReactFlow, { Background, Controls, Node } from "reactflow";
+import ReactFlow, { Background, Controls, Node, Edge } from "reactflow";
 import 'reactflow/dist/style.css';
+import SkillNode from "@/components/SkillNode";
 
-// Einfache Node-Daten
 const nodes: Node[] = [
   {
     id: '1',
-    type: 'default',
+    type: 'skillNode',
     position: { x: 250, y: 100 },
     data: {
-      label: <img src="/logo.png" alt="Logo" style={{ width: 100, height: 100 }} />,
+      label: <img src="/assets/user.png" alt="Logo" style={{ width: 50, height: 50, objectFit: 'contain' }} />,
+    },
+  },
+  {
+    id: '2',
+    parentId: '1',
+    type: 'skillNode',
+    position: { x: 0, y: 300 },
+    data: {
+      label: <img src="/assets/user.png" alt="Logo" style={{ width: 50, height: 50, objectFit: 'contain' }} />,
     },
   },
 ];
+
+const edges: Edge[] = [
+    {
+        id: 'e1-2',
+        type: 'bezier',
+        source: '1',
+        target: '2'
+    }
+];
+
+const nodeTypes = { skillNode: SkillNode };
 
 export default function FlowBoard() {
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <ReactFlow
         nodes={nodes}
-        edges={[]}
+        edges={edges}
+        nodeTypes={nodeTypes}
         fitView
         panOnDrag
         zoomOnScroll
