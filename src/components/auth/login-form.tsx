@@ -67,7 +67,11 @@ export function LoginForm({
               </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full">
-                  {loadingState ? <Loader2 className="animate-spin" /> : "Login"}
+                  {loadingState ? (
+                    <Loader2 className="animate-spin" />
+                  ) : (
+                    "Login"
+                  )}
                 </Button>
               </div>
             </div>

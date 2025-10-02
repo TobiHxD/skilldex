@@ -18,7 +18,10 @@ export default function Page() {
       {
         onRequest: () => setLoading(true),
         onSuccess: () => setLoading(false),
-        onError: (ctx) => { alert(ctx.error.message); setLoading(false); },
+        onError: (ctx) => {
+          alert(ctx.error.message);
+          setLoading(false);
+        },
       },
     );
   };
