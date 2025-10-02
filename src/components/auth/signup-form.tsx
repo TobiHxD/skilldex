@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { FormEvent } from "react";
 
 export function SignupForm({
   onSignUp,
@@ -20,11 +21,12 @@ export function SignupForm({
     password: FormDataEntryValue | null;
   }) => void;
 }) {
-  const handleSignUp = (formData: FormData) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const username = formData.get("username");
     const email = formData.get("email");
     const password = formData.get("password");
-
     onSignUp({ username, email, password });
   };
 
@@ -38,7 +40,7 @@ export function SignupForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={handleSignUp}>
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="username">Username</Label>

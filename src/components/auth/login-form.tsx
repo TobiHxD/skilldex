@@ -10,19 +10,24 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Loader2 } from "lucide-react";
+import { FormEvent } from "react";
 
 export function LoginForm({
   onLogIn,
+  loadingState,
 }: {
   onLogIn: (data: {
     email: FormDataEntryValue | null;
     password: FormDataEntryValue | null;
   }) => void;
+  loadingState: boolean;
 }) {
-  const handleLogIn = (formData: FormData) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
     const email = formData.get("email");
     const password = formData.get("password");
-
     onLogIn({ email, password });
   };
 
@@ -36,7 +41,7 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={handleLogIn}>
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
@@ -62,7 +67,7 @@ export function LoginForm({
               </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full">
-                  Login
+                  {loadingState ? <Loader2 className="animate-spin" /> : "Login"}
                 </Button>
               </div>
             </div>
