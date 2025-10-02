@@ -3,6 +3,7 @@
 import { LoginForm } from "@/components/auth/login-form";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function Page() {
   const [loading, setLoading] = useState(false);
@@ -19,7 +20,7 @@ export default function Page() {
         onRequest: () => setLoading(true),
         onSuccess: () => setLoading(false),
         onError: (ctx) => {
-          alert(ctx.error.message);
+          toast.error(ctx.error.message);
           setLoading(false);
         },
       },

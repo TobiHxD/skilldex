@@ -10,16 +10,19 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Loader2 } from "lucide-react";
 import { FormEvent } from "react";
 
 export function SignupForm({
   onSignUp,
+  loadingState,
 }: {
   onSignUp: (data: {
     username: FormDataEntryValue | null;
     email: FormDataEntryValue | null;
     password: FormDataEntryValue | null;
   }) => void;
+  loadingState: boolean;
 }) {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -68,7 +71,7 @@ export function SignupForm({
               </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full">
-                  Sign up
+                  {loadingState ? <Loader2 className="animate-spin" /> : "Sign up"}
                 </Button>
               </div>
             </div>
