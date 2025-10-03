@@ -2,8 +2,6 @@ import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
-    SidebarGroup,
-    SidebarHeader,
 } from "@/components/ui/sidebar";
 import Account from "./account";
 
