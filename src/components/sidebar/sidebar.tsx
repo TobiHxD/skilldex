@@ -5,16 +5,16 @@ import {
     SidebarGroup,
     SidebarHeader,
 } from "@/components/ui/sidebar";
+import Account from "./account";
 
 export default function AppSidebar() {
     return (
         <Sidebar>
             <SidebarContent>
-                <SidebarGroup>
-                    <SidebarHeader>Header</SidebarHeader>
-                </SidebarGroup>
             </SidebarContent>
-            <SidebarFooter>Footer</SidebarFooter>
+            <SidebarFooter>
+                <Account />
+            </SidebarFooter>
         </Sidebar>
     )
 }

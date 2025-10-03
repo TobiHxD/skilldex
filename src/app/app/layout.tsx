@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import AppSidebar from "@/components/sidebar";
+import AppSidebar from "@/components/sidebar/sidebar";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
