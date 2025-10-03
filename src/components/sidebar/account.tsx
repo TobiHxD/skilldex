@@ -36,7 +36,7 @@ export default function Account() {
                 <div className="aspect-square flex items-center">
                     <ProfileImage />
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col overflow-hidden">
                     <h3>{session?.user.name}</h3>
                     <span className="text-muted-foreground text-sm">{session?.user.email}</span>
                 </div>
