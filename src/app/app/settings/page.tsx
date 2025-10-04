@@ -2,7 +2,9 @@
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { authClient } from "@/lib/auth-client";
+import ProfilePictureUpdate from "./profile-picture-update";
 
 export default function SettingsPage() {
     const { data: session } = authClient.useSession();
@@ -27,8 +29,19 @@ export default function SettingsPage() {
                     </div>
                 </div>
                 <div className="ml-auto flex items-center mt-4 md:mt-0">
-                    <Button className="mx-1" variant="default">Change Picture</Button>
-                    <Button className="mx-1" variant="outline">Remove Picture</Button>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button className="mx-1 hover:cursor-pointer" variant="default">Change Picture</Button>
+                        </DialogTrigger>
+                        <ProfilePictureUpdate />
+                    </Dialog>
+                    <Button 
+                        className="mx-1 hover:cursor-pointer" 
+                        variant="outline" 
+                        onClick={async () => await authClient.updateUser({ image: "" })}
+                    >
+                        Remove Picture
+                    </Button>
                 </div>
             </div>
 
