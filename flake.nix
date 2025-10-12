@@ -31,6 +31,10 @@
             ];
 
             shellHook = ''
+              # This is to get rid of the unable to detect ssl version warning
+              # TODO: Find a better solution
+              export PRISMA_DISABLE_WARNINGS=1
+
               export PRISMA_MIGRATION_ENGINE_BINARY="${pkgs.prisma-engines}/bin/schema-engine"
               export PRISMA_QUERY_ENGINE_BINARY="${pkgs.prisma-engines}/bin/query-engine"
               export PRISMA_QUERY_ENGINE_LIBRARY="${pkgs.prisma-engines}/lib/libquery_engine.node"
