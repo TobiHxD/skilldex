@@ -4,11 +4,13 @@ import { auth } from "@/lib/auth";
 
 const f = createUploadthing();
 
-export const fileRouter = {
+export const profilePictureFileRouter = {
   imageUploader: f({
     image: {
       maxFileSize: "4MB",
       maxFileCount: 1
     }
-  }).middleware(async ({ req }) => { console.log("a") })
-} 
+  })
+}
+
+export type profilePictureFileRouter = typeof profilePictureFileRouter;
