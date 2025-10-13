@@ -5,12 +5,12 @@ import { auth } from "@/lib/auth";
 const f = createUploadthing();
 
 export const profilePictureFileRouter = {
-  imageUploader: f({
+  profilePicture: f({
     image: {
       maxFileSize: "4MB",
       maxFileCount: 1
     }
   })
-}
+} satisfies FileRouter;
 
 export type profilePictureFileRouter = typeof profilePictureFileRouter;
