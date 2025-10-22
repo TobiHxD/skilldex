@@ -1,6 +1,4 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { UploadThingError } from "uploadthing/server";
-import { auth } from "@/lib/auth";
 
 const f = createUploadthing();
 
@@ -10,6 +8,8 @@ export const profilePictureFileRouter = {
       maxFileSize: "4MB",
       maxFileCount: 1
     }
+  }).onUploadComplete(({ file }) => {
+    console.log("Profile picture uploaded:", file);
   })
 } satisfies FileRouter;
 
