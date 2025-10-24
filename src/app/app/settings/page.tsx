@@ -4,10 +4,27 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { authClient } from "@/lib/auth-client";
+import { useState } from "react";
+import { toast } from "sonner";
+import { removeProfilePicture } from "@/lib/user/profile-picture";
 import ProfilePictureUpdate from "./profile-picture-update";
 
 export default function SettingsPage() {
     const { data: session } = authClient.useSession();
+    const [isRemoving, setIsRemoving] = useState(false);
+
+    const handleRemovePicture = async () => {
+        setIsRemoving(true);
+        try {
+            await removeProfilePicture();
+            toast.success("Profile picture removed successfully.");
+        } catch (error) {
+            console.error("Error removing profile picture:", error);
+            toast.error("Failed to remove profile picture.");
+        } finally {
+            setIsRemoving(false);
+        }
+    }
 
     return (
         <div className="min-h-screen px-4 pt-8 md:w-4/5 lg:w-3/5 mx-auto">
@@ -17,10 +34,10 @@ export default function SettingsPage() {
                 <div className="flex items-center">
                     <div className="w-12 aspect-square mr-4">
                         <Avatar className="rounded-sm w-full h-full">
-                        <AvatarImage src={session?.user.image || undefined} />
-                        <AvatarFallback className="bg-blue-500 rounded-sm">
-                            {session?.user.name?.charAt(0)}
-                        </AvatarFallback>
+                            <AvatarImage src={session?.user.image || undefined} />
+                            <AvatarFallback className="bg-blue-500 rounded-sm">
+                                {session?.user.name?.charAt(0)}
+                            </AvatarFallback>
                         </Avatar>
                     </div>
                     <div className="flex flex-col justify-center">
@@ -35,12 +52,13 @@ export default function SettingsPage() {
                         </DialogTrigger>
                         <ProfilePictureUpdate />
                     </Dialog>
-                    <Button 
-                        className="mx-1 hover:cursor-pointer" 
-                        variant="outline" 
-                        onClick={async () => await authClient.updateUser({ image: "" })}
+                    <Button
+                        className="mx-1 hover:cursor-pointer"
+                        variant="outline"
+                        onClick={handleRemovePicture}
+                        disabled={isRemoving}
                     >
-                        Remove Picture
+                        {isRemoving ? "Removing..." : "Remove Picture"}
                     </Button>
                 </div>
             </div>
