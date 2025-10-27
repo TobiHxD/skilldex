@@ -10,10 +10,14 @@ import { removeProfilePicture } from "@/lib/user/profile-picture";
 import ProfilePictureUpdate from "./profile-picture-update";
 import { FieldSet, FieldLabel, FieldGroup, Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from "@/components/ui/input-group";
 
 export default function SettingsPage() {
     const { data: session } = authClient.useSession();
     const [isRemoving, setIsRemoving] = useState(false);
+
+    const [username, setUsername] = useState(session?.user.name || "");
+    const [email, setEmail] = useState(session?.user.email || "");
 
     const handleRemovePicture = async () => {
         setIsRemoving(true);
@@ -71,7 +75,16 @@ export default function SettingsPage() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <Field>
                                 <FieldLabel>Username</FieldLabel>
-                                <Input placeholder={session?.user.name} />
+                                <InputGroup>
+                                    <InputGroupInput placeholder={session?.user.name} onChange={(e) => setUsername(e.target.value)}/>
+                                    <InputGroupAddon align="inline-end">
+                                        <InputGroupButton 
+                                            className={username === session?.user.name ? "hidden" : ""}
+                                        >
+                                            Update
+                                        </InputGroupButton>
+                                    </InputGroupAddon>
+                                </InputGroup>
                             </Field>
                             <Field>
                                 <FieldLabel>Email</FieldLabel>
