@@ -8,6 +8,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { removeProfilePicture } from "@/lib/user/profile-picture";
 import ProfilePictureUpdate from "./profile-picture-update";
+import { FieldSet, FieldLabel, FieldGroup, Field } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 
 export default function SettingsPage() {
     const { data: session } = authClient.useSession();
@@ -30,7 +32,7 @@ export default function SettingsPage() {
         <div className="min-h-screen px-4 pt-8 md:w-4/5 lg:w-3/5 mx-auto">
             <h1 className="text-2xl font-medium mb-4">Account</h1>
 
-            <div className="mb-4 p-4 border rounded-lg bg-secondary flex flex-col md:flex-row">
+            <div className="mb-4 p-4 border rounded-lg bg-secondary flex flex-col lg:flex-row">
                 <div className="flex items-center">
                     <div className="w-12 aspect-square mr-4">
                         <Avatar className="rounded-sm w-full h-full">
@@ -45,7 +47,7 @@ export default function SettingsPage() {
                         <p className="text-sm text-muted-foreground">{session?.user.email}</p>
                     </div>
                 </div>
-                <div className="ml-auto flex items-center mt-4 md:mt-0">
+                <div className="ml-auto flex items-center mt-4 lg:mt-0">
                     <Dialog>
                         <DialogTrigger asChild>
                             <Button className="mx-1 hover:cursor-pointer" variant="default">Change Picture</Button>
@@ -61,6 +63,27 @@ export default function SettingsPage() {
                         {isRemoving ? "Removing..." : "Remove Picture"}
                     </Button>
                 </div>
+            </div>
+
+            <div className="pt-4">
+                <FieldSet>
+                    <FieldGroup>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <Field>
+                                <FieldLabel>Username</FieldLabel>
+                                <Input placeholder={session?.user.name} />
+                            </Field>
+                            <Field>
+                                <FieldLabel>Email</FieldLabel>
+                                <Input placeholder={session?.user.email} />
+                            </Field>
+                            <Field>
+                                <FieldLabel>Password</FieldLabel>
+                                <Input type="password" placeholder="********" />
+                            </Field>
+                        </div>
+                    </FieldGroup>
+                </FieldSet>
             </div>
 
         </div>
