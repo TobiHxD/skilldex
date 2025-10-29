@@ -16,8 +16,8 @@ export default function SettingsPage() {
     const { data: session } = authClient.useSession();
     const [isRemoving, setIsRemoving] = useState(false);
 
-    const [username, setUsername] = useState(session?.user.name || "");
-    const [email, setEmail] = useState(session?.user.email || "");
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
 
     const handleRemovePicture = async () => {
         setIsRemoving(true);
@@ -30,6 +30,19 @@ export default function SettingsPage() {
         } finally {
             setIsRemoving(false);
         }
+    }
+
+    const handleUsernameUpdate = () => {
+        authClient.updateUser({ name: username });
+        toast.success("Username updated successfully.");
+    }
+
+    const handleEmailUpdate = () => {
+        authClient.changeEmail({ 
+            newEmail: email,
+            callbackURL: "/app/settings"
+        });
+        toast.success("Email updated successfully.");
     }
 
     return (
@@ -79,7 +92,8 @@ export default function SettingsPage() {
                                     <InputGroupInput placeholder={session?.user.name} onChange={(e) => setUsername(e.target.value)}/>
                                     <InputGroupAddon align="inline-end">
                                         <InputGroupButton 
-                                            className={username === session?.user.name ? "hidden" : ""}
+                                            className={username ? "" : "hidden"}
+                                            onClick={handleUsernameUpdate}
                                         >
                                             Update
                                         </InputGroupButton>
@@ -88,7 +102,17 @@ export default function SettingsPage() {
                             </Field>
                             <Field>
                                 <FieldLabel>Email</FieldLabel>
-                                <Input placeholder={session?.user.email} />
+                                <InputGroup>
+                                    <InputGroupInput placeholder={session?.user.email} onChange={(e) => setEmail(e.target.value)}/>
+                                    <InputGroupAddon align="inline-end">
+                                        <InputGroupButton 
+                                            className={email ? "" : "hidden"}
+                                            onClick={handleEmailUpdate}
+                                        >
+                                            Update
+                                        </InputGroupButton>
+                                    </InputGroupAddon>
+                                </InputGroup>
                             </Field>
                             <Field>
                                 <FieldLabel>Password</FieldLabel>
