@@ -3,6 +3,13 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { PrismaClient } from "@/../prisma/generated/prisma";
 import { sendVerificationEmail } from "./email";
 
+interface verificationEmailProps {
+  user: string,
+  newEmail: string,
+  url: string,
+  token: string
+}
+
 const prisma = new PrismaClient();
 
 export const auth = betterAuth({
@@ -13,6 +20,7 @@ export const auth = betterAuth({
   },
 
   emailVerification: {
+    sendOnSignUp: true,
     sendVerificationEmail: async ({user, url, token}, request) => {
       await sendVerificationEmail({
         to: user.email!,
@@ -25,6 +33,13 @@ export const auth = betterAuth({
   user: {
     changeEmail: {
       enabled: true,
+      sendChangeEmailVerificationEmail: async ({user, newEmail, url, token}: verificationEmailProps, request: Request) => {
+        await sendVerificationEmail({
+          to: newEmail,
+          from: "verify@skilldex.nicoladen.dev",
+          url: url
+        });
+      },
     },
   },
 });
