@@ -1,19 +1,18 @@
 "use client";
 
-import { useState } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/sidebar/sidebar";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-
   return (
     <SidebarProvider>
+        <div className="min-h-screen min-w-screen flex">
         <AppSidebar />
-        <main>
-            <SidebarTrigger />
+        <main className="flex-1">
+            <SidebarTrigger className="absolute"/>
             {children}
         </main>
+        </div>
     </SidebarProvider>
   );
 }

@@ -22,6 +22,7 @@ export default function AccountMenu({ visible }: { visible: boolean }) {
         <div className={cn("overflow-hidden transition-all duration-200 ease-in-out", visible ? "max-h-30" : "max-h-0")}>
             <div 
                 className="flex space-y-2 mt-2 bg-secondary p-2 rounded-lg justify-start items-center hover:bg-secondary/60 hover:cursor-pointer"
+                onClick={() => router.push("/app/settings")}
             >
                 <Settings className="h-5 w-5 mr-2 text-muted-foreground" />
                 Settings
