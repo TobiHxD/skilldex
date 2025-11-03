@@ -1,7 +1,7 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { PrismaClient } from "@/../prisma/generated/prisma";
-import { sendVerificationEmail } from "./email";
+import { sendResetPasswordEmail, sendVerificationEmail } from "./email";
 
 interface verificationEmailProps {
   user: string,
@@ -17,6 +17,13 @@ export const auth = betterAuth({
 
   emailAndPassword: {
     enabled: true,
+    sendResetPassword: async ({user, url, token}, request) => {
+      sendResetPasswordEmail({
+        to: user.email!,
+        from: "reset@skilldex.nicoladen.dev",
+        url: url
+      });
+    }
   },
 
   emailVerification: {
