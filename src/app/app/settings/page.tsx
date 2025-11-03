@@ -32,17 +32,27 @@ export default function SettingsPage() {
         }
     }
 
-    const handleUsernameUpdate = () => {
-        authClient.updateUser({ name: username });
-        toast.success("Username updated successfully.");
+    const handleUsernameUpdate = async () => {
+        const {data, error} = await authClient.updateUser({ name: username });
+
+        if (error == null) {
+            toast.success("Username updated successfully.");
+        } else {
+            toast.error(error.message);
+        }
     }
 
-    const handleEmailUpdate = () => {
-        authClient.changeEmail({ 
+    const handleEmailUpdate = async () => {
+        const {data, error} = await authClient.changeEmail({ 
             newEmail: email,
             callbackURL: "/app/settings"
         });
-        toast.success("Email updated successfully.");
+        if (error == null) {
+            toast.success("Verification email sent to new address.");
+        }
+        else {
+            toast.error(error.message);
+        }
     }
 
     return (
