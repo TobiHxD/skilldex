@@ -18,7 +18,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({user, url, token}, request) => {
-      sendResetPasswordEmail({
+      await sendResetPasswordEmail({
         to: user.email!,
         from: "reset@skilldex.nicoladen.dev",
         url: url
