@@ -7,10 +7,13 @@ import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
 import { Loader2 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import { connection } from "next/server";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export default function PasswordResetConfirmationPage() {
+export default async function PasswordResetConfirmationPage() {
+    await connection();
+
     const searchParams = useSearchParams();
     const token = searchParams.get("token");
 
